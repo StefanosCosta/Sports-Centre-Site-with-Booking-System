@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/a8b182e161.js" crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit= yes">
+
+  {% if title %}
+      <title>{{ title }}</title>
+      {% else %}
+      <title>19 GYM</title>
+      {% endif %}
+</head>
+<body>
+  <header class="site-header">
+  <nav class="navbar navbar-expand-xl navbar-dark bg-dark fixed-top">
+    <a class="navbar-brand" href="/"><i class="fas fa-dumbbell fa-3x mx-3x"></i>19 GYM<a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link" href="/">Home<span class="sr-only">(current)</span></a>
+      <a class="nav-item nav-link" href="/facilities">Our Facilities</a>
+      {% if current_user.is_authenticated %}
+      <a class="nav-item nav-link" href="{{ url_for('timetable',header='Full timetable') }}">Full Timetable</a>
+      <a class="nav-item nav-link" href="/workout">Workouts</a>
+      <a class="nav-item nav-link" href="/plans">Plans</a>
+        <a class="nav-item nav-link" href="/planreceipts">My Plans</a>
+      <a class="nav-item nav-link" href="/mybookings">My bookings</a>
+      <a class="nav-item nav-link" href="/logout">Log out</a>
+      {%endif%}
+    </div>
+  </div>
+</nav>
+
+  <main role="main" class="container">
+    <div class="wrapper">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+  </body>
+</html>

@@ -1,0 +1,4 @@
+2020-05-11 19:10:49,292 INFO: 19 Gym startup [in /home/beits/Desktop/Year 2/comp2913/merged/CW/app/__init__.py:221]
+2020-05-11 19:12:36,927 WARNING: Invalid Email login [in /home/beits/Desktop/Year 2/comp2913/merged/CW/app/authenticate.py:53]
+2020-05-11 19:19:40,254 INFO: User with id 2 successfully logged in [in /home/beits/Desktop/Year 2/comp2913/merged/CW/app/views.py:76]
+2020-05-11 19:19:56,644 INFO: Logging User id: 2 Out [in /home/beits/Desktop/Year 2/comp2913/merged/CW/app/views.py:615]

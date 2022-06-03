@@ -1,0 +1,85 @@
+<html>
+<body>
+<h1>USERS</h1>
+{% for u1 in database %}
+
+
+<br />
+  <h>{{u1.id}}</h><br />
+    {{u1.first_name}}<br />
+    {{u1.email}}<br />
+      {{u1.password}}<br />
+
+
+      {% for new in db1 %}
+        {% if new.customerId==u1.id %}
+        <h1>receipts</h1>
+      <br />
+        {{new.id}}<br />
+          {{new.price}}<br />
+          {{new.dateOfPurchase.replace(microsecond=0)}}<br />
+            {{new.customerId}}<br />
+            {% endif %}
+      {% endfor %}
+{% endfor %}
+
+<h1>RECEIPTS</h1>
+{% for new in db1 %}
+<br />
+  {{new.id}}<br />
+    {{new.price}}<br />
+    {{new.dateOfPurchase.replace(microsecond=0)}}<br />
+      {{new.customerId}}<br />
+{% endfor %}
+
+<h1>FACILITIES</h1>
+{% for newf in fdb %}
+<br />
+  <h>{{newf.id}}</h><br />
+    {{newf.facilityName}}<br />
+    {{newf.price}}<br />
+      {{newf.capacity}}<br />
+
+
+            {% for newa in adb %}
+              {% if newa.facilityId==newf.id %}
+              <h1>activities</h1>
+            <br />
+              {{newa.id}}<br />
+              {{newa.activityType}}<br />
+
+                  {% endif %}
+            {% endfor %}
+
+{% endfor %}
+
+<h1>BOOKINGS</h1>
+{% for b1 in bdb %}
+<br /><br />
+  {{b1.id}}<br />
+    {{b1.bookingDate}}<br />
+    {{b1.bookingTime}}<br />
+      {{b1.facilityId}}<br />
+
+      {% for cc in cdb1 %}
+
+        {% if cc.bookingId==b1.id %}<br />
+        <h>counter</h>
+      <br />
+        {{cc.id}}<br />
+        {{cc.currentCapacity}}<br />
+              {% endif %}
+              {% endfor %}
+{% endfor %}
+<h1>COUNTER</h1>
+{% for c1 in cdb1 %}
+<br />
+  {{c1.id}}<br />
+  {{c1.currentCapacity}}<br />
+    {{c1.bookingId}}<br />
+
+{% endfor %}
+
+  </body>
+
+</html>

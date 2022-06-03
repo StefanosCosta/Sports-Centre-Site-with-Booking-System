@@ -1,0 +1,144 @@
+{%extends "layout.html" %}
+{%block content%}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-info">{{ message }} </div>
+     {% endfor %}
+   {% endif %}
+ {% endwith %}
+
+ <div class="column">
+        <div class="row">
+
+            <div class="card text-black bg-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">BRONZE</div>
+                <div class="card-body">
+                <h5 class="card-title">BRONZE</h5>
+                <p class="card-text">Basic plan , off-peak only (00:00-10:00).</p>
+                </div>
+            </div>
+            <div style="padding: 30px;">
+            </div>
+            <div class="card text-white bg-secondary mb-3 " style="max-width: 18rem; ;min-height: 50rem;">
+                <div class="card-header">SILVER</div>
+                <div class="card-body">
+                <h5 class="card-title">NO TIME RESTRICTIONS, not full benefits</h5>
+                <p class="card-text">.</p>
+                </div>
+            </div>
+            <div style="padding: 30px;">
+            </div>
+            <div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
+                <div class="card-header">GOLD</div>
+                <div class="card-body">
+                <h5 class="card-title">Success card title</h5>
+                <p class="card-text">Gold membership means true commitment,enjoy our facilities with NO RESTRICTION !!</p>
+                </div>
+            </div>
+
+    </div>
+
+    <div class="row">
+
+
+      {% if user.plan=="Bronze" %}
+      <div style="padding: 15px;">
+          </div>
+      This is your current Plan
+      <div style="padding: 15px;">
+          </div>
+      {% else %}
+    <div style="padding: 40px;">
+
+    </div>
+
+    <form action="" method="post" value="1"><!-- To do:on data amount send database price-->
+        <script
+        Stripe.setPublishableKey('pk_test_TYooMQauvdEDq54NiTphI7jx');
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+        data-description="A Flask Charge"
+        data-amount="1500"
+        data-locale="auto">
+
+        </script>
+
+
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+         <input type="hidden" name="name" value="1"/>
+    </form>
+    <div style="padding: 40px;">
+        </div>
+
+    {% endif %}
+
+      {% if user.plan=="Silver" %}
+
+      <div style="padding: 50px;">
+        </div>
+        This is your current Plan
+        <div style="padding: 15px;">
+            </div>
+        {% else %}
+
+        <div style="padding: 80px;">
+          </div>
+
+    <form action="" method="post" id="2"><!-- To do:on data amount send database price-->
+        <script
+
+
+        src="https://checkout.stripe.com/checkout.js"
+
+        class="stripe-button"
+        data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+        data-description="A Flask Charge"
+        data-amount="2500"
+        data-locale="auto">
+        </script>
+
+ <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <input type="hidden" name="name" value="2"/>
+    </form>
+    <div style="padding: 40px;">
+        </div>
+
+{% endif %}
+{% if user.plan=="Gold" %}
+
+<div style="padding: 50px;">
+  </div>
+  This is your current Plan
+
+  {% else %}
+
+  <div style="padding: 80px;">
+    </div>
+
+    <form action="" method="post" id="3" ><!-- To do:on data amount send database price-->
+        <script
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+        data-description="A Flask Charge"
+        data-amount="4000"
+        data-locale="auto">
+        </script>
+       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+       <input type="hidden" name="name" value="3"/>
+    </form>
+
+  {% endif %}
+
+</div>
+
+</div>
+<h>Or get a plan just for the following week with a 10% discount</h>
+<form action="{{ url_for('weekly') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+  <input type="submit" class = "btn btn-primary" value="Week Plan">
+</form>
+
+{%endblock%}

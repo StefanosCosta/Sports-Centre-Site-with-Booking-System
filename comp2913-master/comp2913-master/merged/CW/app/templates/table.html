@@ -1,0 +1,80 @@
+{%extends "layout.html" %}
+{%block content%}
+<br>
+<div class = "row h-100 justify-content-center align-items-center">
+  {% with messages = get_flashed_messages() %}
+     {% if messages %}
+      <ul>
+       {% for message in messages %}
+         <li>{{ message }} </li>
+       {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+<span style="display:inline-block; width: 1000px;"></span>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Facility</th>
+        <th scope="col">Activity</th>
+        <th scope="col">Date</th>
+        <th scope="col">Time</th>
+        <th scope="col">Day</th>
+        <th scope="col">Price</th>
+        <th scope="col">Availability</th>
+        <th scope="col">Payment Option</th>
+        <th scope="col">Book</th>
+      </tr>
+    </thead>
+    {%for s in sessionList%}
+    <tbody>
+      <tr>
+        <th scope="row">{{s[0].id}} {{s[0].facility}} </th>
+        <td>{{s[0].activity}}</td>
+        <td>{{s[0].date.strftime('%d/%m/%Y')}}</td>
+        <td>{{s[0].startTime}}:00-{{s[0].endTime}}:00</td>
+        <td>{{s[0].day}}</td>
+        <td>£{{s[1]}}</td>
+        <td>{{s[0].availability}}</td>
+        {% if s[1]|int != 0%}
+        <td>
+        <form action="" method="POST" name = "Inputs" >
+          {{ form.csrf_token }}
+          {{ form.myField(class = "form-control-sm ")}}
+          {{ form.sessionId(value = s[0].id) }}
+           <!-- <input type="hidden" name="sessionId" value="{{s[0].id}}"> -->
+        </td>
+        <td>
+          <div class="form-group">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              {{ form.submit(class = "form-control-sm ") }} <!-- submit button -->
+          </div>
+        </form>
+        </td>
+        {% else %}
+        <td>
+        <form action="" method="POST" name = "Inputs2" >
+          {{ form2.csrf_token }}
+          {{ form2.sessionId(value = s[0].id) }}
+           <!-- <input type="hidden" name="sessionId" value="{{s[0].id}}"> -->
+        </td>
+        <td>
+          <div class="form-group">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+              {{ form2.submit(class = "form-control-sm ") }} <!-- submit button -->
+          </div>
+        </form>
+        </td>
+        {% endif %}
+        <!-- <input class="btn btn-primary" type="submit" value="Book"> -->
+
+
+      </tr>
+    </tbody>
+    {%endfor%}
+  </table>
+
+
+
+  {%endblock%}

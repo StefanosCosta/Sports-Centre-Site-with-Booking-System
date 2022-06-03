@@ -1,0 +1,34 @@
+{%extends "layout.html" %}
+{%block content%}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-info">{{ message }} </div>
+     {% endfor %}
+   {% endif %}
+ {% endwith %}
+<br />
+<br />
+<br />
+  <h3>Choose one or more facilities to book all of the sessions for the following week</h3>
+  <h>Get an extra 10% discount for each facility you choose</h>
+  <br />
+  <br />
+  <form action="weekly" method="post" id="4" >
+
+ <input type="checkbox" id="sp" name="sp" value="true">
+<label for="vehicle1"> Swimming Pool</label><br>
+
+<input type="checkbox" id="sc" name="sc" value="true">
+<label for="vehicle1">Squash room-2</label><br>
+
+<input type="checkbox" id="sh" name="sh" value="true">
+<label for="vehicle1"> Sports Hall</label><br>
+
+<br />
+<br />
+
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+<input type="submit" class = "btn btn-primary" value="View week plan price">
+  </form>
+ {%endblock%}

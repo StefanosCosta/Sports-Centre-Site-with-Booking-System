@@ -1,0 +1,7 @@
+
+{%block content%}
+{% set my_string = "../static/receipts/" + id + ".pdf" %}
+<center>
+<embed src={{my_string}} width="800px" height="1100px" />
+</center>
+{%endblock%}

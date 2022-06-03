@@ -1,0 +1,267 @@
+{% extends 'admin/master.html' %}
+{% block head_css %}
+{{ super() }}
+<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
+{% endblock head_css %}
+{%block body%}
+
+
+<div class = "row h-100 justify-content-center align-items-center">
+  {% with messages = get_flashed_messages() %}
+     {% if messages %}
+      <ul>
+       {% for message in messages %}
+         <li>{{ message }} </li>
+       {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-oOs/gFavzADqv3i5nCM+9CzXe3e5vXLXZ5LZ7PplpsWpTCufB7kqkTlC9FtZ5nJo" crossorigin="anonymous">-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+  <h1 class="text-center">INCOME</h1>
+  <div class="column">
+    <div class="col-1 col-md-1" ></div>
+    <div class="col-6 col-md-5 pt-5">
+
+        <canvas id="bar-chart" width="50" height="50"></canvas>
+    </div>
+    <div class="col-6 col-md-5 pt-5">
+
+      <canvas id="bar-chart2" width="50" height="50"></canvas>
+  </div>
+  <div class="col-6 col-md-6 pt-5">
+
+    <canvas id="bar-chart3" width="50" height="50"></canvas>
+</div>
+  </div>
+</div>
+
+
+<div class="container">
+<h1 class="text-center">USAGE</h1>
+<div class="column">
+    <div class="col-1 col-md-1">
+    </div>
+    <div id="piechart" class="col-6 col-md-4">
+    </div>
+    <div class="col-1 col-md-1">
+    </div>
+    <div id="piechart2" class="col-6 col-md-4">
+    </div>
+    <div class="col-6 col-md-5 pt-5">
+      <canvas id="bar-chart4" width="50" height="50"></canvas>
+    </div>
+    
+</div>
+</div>
+<script>
+  new Chart(document.getElementById("bar-chart"), {
+      type: 'bar',
+      data: {
+        labels: ["Overall income","Squash room-1", "Squash room-2","Squash room-3","Squash room-4", "Swimming Pool","Sports Hall","Fitness Room"],
+        datasets: [
+          {
+            label: "Income(Pounds)",
+            backgroundColor: ["red", "blue","yellow","green","pink","purple","blue","black"],
+            data: ['{{priceAll}}','{{SR1}}','{{SR2}}','{{SR3}}','{{SR4}}','{{swimmingPoolPrice}}','{{sportsPrice}}','{{fitnessPrice}}']
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly income per Facility'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+<script>
+  new Chart(document.getElementById("bar-chart2"), {
+      type: 'bar',
+      data: {
+        labels: ["Lane swimming","Swimming-Lessons", "Swimming-Team events","Fitness-1hour","Sports-1hour", "Squash 1-1hour","Squash 2-1hour","Squash 3-1hour","Squash 4-1hour","Squash 1-Team","Squash 2-Team","Squash 3-Team","Squash 4-Team"],
+        datasets: [
+          {
+            label: "Income(Pounds)",
+            backgroundColor: ["red", "blue","yellow","green","pink","purple","blue","black","red","blue","green","brown","black"],
+            data: ['{{laneSwimmingPrice}}','{{lessonsPrice}}','{{teamPrice}}','{{fitnessPrice}}','{{sportsPrice}}','{{SR1_1hourPrice}}','{{SR2_1hourPrice}}','{{SR3_1hourPrice}}','{{SR4_1hourPrice}}','{{SR1_TeamPrice}}','{{SR2_TeamPrice}}','{{SR3_TeamPrice}}','{{SR4_TeamPrice}}']
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly income per Activity'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+<script>
+  var label={{label|safe}};
+  var value={{value|safe}};
+  new Chart(document.getElementById("bar-chart3"), {
+      type: 'bar',
+      data: {
+        labels:label,
+        datasets: [
+          {
+            label: "Income(Pounds)",
+            backgroundColor: 'rgb(255, 99, 132)',
+            data: value
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly income per Session'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+
+<script>
+  var label={{label|safe}};
+  var usage={{sessionAct|safe}};
+  new Chart(document.getElementById("bar-chart4"), {
+      type: 'bar',
+      data: {
+        labels:label,
+        datasets: [
+          {
+            label: "Time Booked",
+            backgroundColor: 'rgb(255, 99, 132)',
+            data: usage
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly Usage per Session'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var counter1=Number('{{swimmingCounter}}');
+              var counter2=Number('{{fitnessCounter}}');
+              var counter3=Number('{{sr1c}}');
+              var counter4=Number('{{sr2c}}');
+              var counter5=Number('{{sr3c}}');
+              var counter6=Number('{{sr4c}}');
+              var counter7=Number('{{sportsCounter}}');
+              var data = google.visualization.arrayToDataTable([
+              ['Facility Usage', 'Booking activity'],
+              ['Swimming pool', counter1],
+              ['Fitness Room', counter2],
+              ['Squash court-1', counter3],
+              ['Squash court-2', counter4],
+              ['Squash court-3', counter5],
+              ['Squash court-4', counter6],
+              ['Sports Hall', counter7],
+
+            ]);
+
+              var options = {'title':'Weekly Facility Usage', 'width':550, 'height':400};
+
+
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+         </script>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var counter1=Number('{{LaneSwimming}}');
+      var counter2=Number('{{fitnessCounter}}');
+      var counter3=Number('{{sr1_1hourC}}');
+      var counter4=Number('{{sr2_1hourC}}');
+      var counter5=Number('{{sr3_1hourC}}');
+      var counter6=Number('{{sr4_1hourC}}');
+      var counter8=Number('{{sr1_TeamC}}');
+      var counter9=Number('{{sr2_TeamC}}');
+      var counter10=Number('{{sr3_TeamC}}');
+      var counter11=Number('{{sr4_TeamC}}');
+      var counter7=Number('{{sportsCounter}}');
+      var data = google.visualization.arrayToDataTable([
+      ['Facility Usage', 'Booking activity'],
+      ['Swimming pool-Lane Swimming', counter1],
+      ['Fitness Room', counter2],
+      ['Squash court-1-1hour session', counter3],
+      ['Squash court-2-1hour session', counter4],
+      ['Squash court-3-1hour session', counter5],
+      ['Squash court-4-1hour session', counter6],
+      ['Squash court-1-Team Event', counter8],
+      ['Squash court-2-Team Event', counter9],
+      ['Squash court-3-Team Event', counter10],
+      ['Squash court-4-Team Event', counter11],
+      ['Sports Hall', counter7],
+
+    ]);
+
+      var options = {'title':'Weekly Activity Usage', 'width':550, 'height':400};
+
+
+      var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+      chart.draw(data, options);
+    }
+ </script>
+
+
+
+{%endblock body%}

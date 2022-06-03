@@ -1,0 +1,107 @@
+
+{%extends "layout.html" %}
+{%block content%}
+<style>
+th, td {
+  border: 1px solid #006;
+}
+</style>
+<br>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<div class = "container w-100">
+  <p>Week :{{start}} - {{end}}<p>
+    <div class="d-flex justify-content-between">
+      <div>
+        <h1>{{header}}</h1>
+      </div>
+    <div class="dropdown">
+      <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Facilities
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="{{ url_for('timetable',header='Full timetable') }}">Full timetable</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Swimming Pool',header='Swimming Pool') }}">Swimming Pool</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Fitness room',header='Fitness Room') }}">Fitness Room</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Sports Hall', header='Sports Hall') }}">Sports Hall</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Squash room-1',header='Squash room-1') }}">Squash room-1</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Squash room-2',header='Squash room-2') }}">Squash room-2</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Squash room-3',header='Squash room-3') }}">Squash room-3</a>
+        <a class="dropdown-item" href="{{ url_for('schedule', facility='Squash room-4',header='Squash room-4') }}">Squash room-4</a>
+      </div>
+    </div>
+  </div>
+  {{todayDate}} {{todayTime}}
+  <div class="table-responsive-xl">
+<table class="table-responsive-xl table-dark " cellpadding="0" cellspacing = "0">
+    <thead>
+      <tr>
+        <th></th>
+        {%for j in times %}
+          <th scope="row"><font size="2"><p>{{j[0]}}:00-{{j[1]}}:00<p> </th></font>
+            {%endfor%}
+      </tr>
+      <tr>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+
+        {%for i in days %}
+            <th scope="row"><font size="2">{{i[0]}} {{i[1]}}</th></font>
+            {%for l in times%}
+            {% set facilities = [] %}
+              <th scope="row">
+              {% for sesh in sessions%}
+                {% if sesh.date == i[2]%}
+                  {% if sesh.startTime == l[0] %}
+                    {% if sesh.facility not in facilities %}
+                      {% set facilities = facilities.append(sesh.facility)%}
+                      {% if (sesh.date == todayDate) and (sesh.startTime > todayTime) %}
+                          <form action="{{ url_for('tableBook',id=sesh.id) }}"  method="POST">
+                            {{ sesh.csrf_token }}
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                          <input class="btn btn-dark" type="submit" value="{{sesh.facility}}">
+                          </form>
+                      {% elif (sesh.date > todayDate)%}
+                      <form action="{{ url_for('tableBook',id=sesh.id) }}"  method="POST">
+                        {{ sesh.csrf_token }}
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                      <input class="btn btn-dark" type="submit" value="{{sesh.facility}}">
+                      </form>
+                          {% else %}
+                            <input class="btn btn-dark" type="submit" value="{{sesh.facility}}">
+                        {% endif %}
+                    {% endif %}
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+              </th>
+              <!-- <th scope="row"></th> -->
+            {% endfor %}
+
+                </tr>
+        {%endfor%}
+
+
+    </tbody>
+
+  </table>
+</div>
+<br>
+  <div class="d-flex justify-content-between">
+    <div><p>* To book press selection on the timetable*</p></div>
+    <div>
+    <td><form action="{{ url_for('facprices') }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <input class="btn btn-dark" type="submit" value="Price List">
+    </form>
+  </form></td>
+
+  </div>
+  </div>
+
+</div>
+
+
+  {%endblock%}

@@ -1,0 +1,11 @@
+{%extends "layout.html" %}
+{%block content%}
+
+{% for newpost in users %}
+  <p>{{newpost.name}}</p>
+  <p>{{newpost.password}}</p>
+{% endfor %}
+
+
+
+{% endblock %}

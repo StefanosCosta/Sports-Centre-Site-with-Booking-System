@@ -1,0 +1,32 @@
+{%extends "layout.html" %}
+{%block content%}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-info">{{ message }} </div>
+     {% endfor %}
+   {% endif %}
+ {% endwith %}
+<br />
+<br />
+<br />
+<br />
+<br />
+<h1> Weekly Plan for {{ startWeek }} - {{ endWeek }}
+</h1>
+<h2>Price: {{ price }}</h2>
+
+    <form action="" method="post" id="3" ><!-- To do:on data amount send database price-->
+        <script
+        src="https://checkout.stripe.com/checkout.js"
+        class="stripe-button"
+        data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
+        data-description="A Flask Charge"
+        data-amount={{cardPrice}}
+        data-locale="auto">
+        </script>
+       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+       <input type="hidden" name="name" value="3"/>
+    </form>
+
+{%endblock%}

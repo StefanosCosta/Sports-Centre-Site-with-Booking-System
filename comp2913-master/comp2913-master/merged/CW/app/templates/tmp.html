@@ -1,0 +1,137 @@
+
+{%extends "layout.html" %}
+{%block content%}
+<div class = "row h-100 justify-content-center align-items-center">
+  {% with messages = get_flashed_messages() %}
+     {% if messages %}
+      <ul>
+       {% for message in messages %}
+         <li>{{ message }} </li>
+       {% endfor %}
+      </ul>
+    {% endif %}
+  {% endwith %}
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-oOs/gFavzADqv3i5nCM+9CzXe3e5vXLXZ5LZ7PplpsWpTCufB7kqkTlC9FtZ5nJo" crossorigin="anonymous">-->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+</head>
+<body>
+  <div class="row">
+    <div class="col-1 col-md-1" >
+    </div>
+    <div class="col-6 col-md-4 pt-5">
+
+        <canvas id="bar-chart" width="50" height="50"></canvas>
+    </div>
+    <div class="col-6 col-md-4 pt-5">
+
+      <canvas id="bar-chart2" width="50" height="50"></canvas>
+  </div>
+
+    <div class="col-1 col-md-1">
+    </div>
+    <div id="piechart" class="col-6 col-md-4">
+    </div>
+  </div>
+
+<script>
+  new Chart(document.getElementById("bar-chart"), {
+      type: 'bar',
+      data: {
+        labels: ["Overall income","Squash room-1", "Squash room-2","Squash room-3","Squash room-4", "Swimming Lessons","Team events","Lane swimming"],
+        datasets: [
+          {
+            label: "Income(Pounds)",
+            backgroundColor: ["red", "blue","yellow","green","pink","purple","blue","black"],
+            data: ['{{priceAll}}','{{SR1}}','{{SR2}}','{{SR3}}','{{SR4}}','{{laneSwimmingPrice}}','{{teamPrice}}','{{laneSwimming}}']
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly income per Facility'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+<script>
+  new Chart(document.getElementById("bar-chart2"), {
+      type: 'bar',
+      data: {
+        labels: ["Swimming pool-Lane swimming","Swimming Pool-Lessons", "Swimming pool-Team events","Fitness room-1hour","Sports hall-1 hour", "Squash room 1 activity","Squash room 2 activity","Squash room 3 activity","Squash room 4 activity"],
+        datasets: [
+          {
+            label: "Income(Pounds)",
+            backgroundColor: ["red", "blue","yellow","green","pink","purple","blue","black"],
+            data: ['{{laneSwimmingPrice}}','{{lessonsPrice}}','{{teamPrice}}','{{fitnessPrice}}','{{sportsPrice}}','{{laneSwimmingPrice}}','{{teamPrice}}','{{laneSwimming}}','{{SR1}}','{{SR2}}','{{SR3}}','{{SR4}}']
+          }
+        ]
+      },
+      options: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Weekly income per Facility'
+        },
+        scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+
+</script>
+
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var counter1=Number('{{swimmingCounter}}');
+              var counter2=Number('{{fitnessCounter}}');
+              var counter3=Number('{{sr1c}}');
+              var counter4=Number('{{sr2c}}');
+              var counter5=Number('{{sr3c}}');
+              var counter6=Number('{{sr4c}}');
+              var counter7=Number('{{sportsCounter}}');
+              var data = google.visualization.arrayToDataTable([
+              ['Facility Usage', 'Booking activity'],
+              ['Swimming pool', counter1],
+              ['Fitness Room', counter2],
+              ['Squash court-1', counter3],
+              ['Squash court-2', counter4],
+              ['Squash court-3', counter5],
+              ['Squash court-4', counter6],
+              ['Sports Hall', counter7],
+
+            ]);
+
+              var options = {'title':'Weekly Facility Usage', 'width':550, 'height':400};
+
+
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+         </script>
+
+
+
+
+  {%endblock%}

@@ -1,0 +1,124 @@
+{%extends "layout.html" %}
+{%block content%}
+
+<br />
+<h1>Current Plans</h1>
+{% if user.plan == "No Plan" %}
+You currently don't have a membership plan
+<form action="{{ url_for('plans') }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+  <input type="submit" class = "btn btn-primary" value="Purchase a plan">
+
+</form>
+{% else %}
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Membership</th>
+
+        <th scope="col">Date</th>
+
+        <th scope="col">Receipt</th>
+          <th scope="col">Cancel</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr>
+        <th scope="row">{{currentPlan.type}}</th>
+
+        <td>{{currentPlan.dateOfPurchase.strftime("%Y-%m-%d")}}</td>
+
+                <td><form action="{{ url_for('planreceipts') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                      <input type="hidden" name="type" value="{{currentPlan.type}}"/>
+                    <input type="hidden" name="receiptId" value="{{currentPlan.id}}"/>
+                  <input type="submit" class = "btn btn-primary" value="Show receipt">
+
+                </form>
+
+
+              </td>
+
+              <td><form action="{{ url_for('cancel') }}" method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="type" value="{{currentPlan.type}}"/>
+                  <input type="hidden" name="receiptId" value="{{currentPlan.id}}"/>
+                <input type="submit" class = "btn btn-primary" value="Cancel Membership">
+
+              </form>
+
+
+            </td>
+
+
+      </tr>
+    </tbody>
+{% endif %}
+{% for receipt in receipts %}
+{% if receipt.type=="Weekly Plan" %}
+
+<tbody>
+  <tr>
+    <th scope="row">{{receipt.type}}</th>
+
+    <td>{{receipt.dateOfPurchase.strftime("%Y-%m-%d")}}</td>
+
+            <td><form action="{{ url_for('planreceipts') }}" method="post">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                  <input type="hidden" name="type" value="{{receipt.type}}"/>
+                <input type="hidden" name="receiptId" value="{{receipt.id}}"/>
+              <input type="submit" class = "btn btn-primary" value="Show receipt">
+
+            </form></td>
+
+
+  </tr>
+</tbody>
+{% endif %}
+{% endfor %}
+  </table>
+
+<br />
+
+<h1>Past Plans</h1>
+
+<table class="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col">Membership</th>
+
+      <th scope="col">Date</th>
+
+      <th scope="col">Receipt</th>
+    </tr>
+  </thead>
+  {% for receipt in receipts %}
+  {% if receipt.type!="Booking" %}
+  {% if receipt.type!="Weekly Plan" %}
+  {% if receipt.id!=currentPlan.id %}
+
+  <tbody>
+    <tr>
+      <th scope="row">{{receipt.type}}</th>
+
+      <td>{{receipt.dateOfPurchase.strftime("%Y-%m-%d")}}</td>
+
+              <td><form action="{{ url_for('planreceipts') }}" method="post">
+                  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+                    <input type="hidden" name="type" value="{{receipt.type}}"/>
+                  <input type="hidden" name="receiptId" value="{{receipt.id}}"/>
+                <input type="submit" class = "btn btn-primary" value="Show receipt">
+
+              </form></td>
+              {% endif %}
+  {% endif %}
+    {% endif %}
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+
+
+{%endblock%}

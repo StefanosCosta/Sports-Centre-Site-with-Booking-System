@@ -1,0 +1,22 @@
+
+{%extends "layout.html" %}
+{%block content%}
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Facility</th>
+        <th scope="col">Day and time availabe</th>
+      </tr>
+    </thead>
+    {%for i in facility%}
+    <tbody>
+      <tr>
+        <th scope="row">{{i}}</th>
+        <td>{{i.facilityName}}</td>
+        <td>{{i.date}}</td>
+      </tr>
+    </tbody>
+    {%endfor%}
+  </table>
+  
+  {%endblock%}

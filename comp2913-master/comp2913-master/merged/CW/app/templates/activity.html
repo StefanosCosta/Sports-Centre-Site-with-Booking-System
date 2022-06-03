@@ -1,0 +1,92 @@
+{%extends "layout.html" %}
+{%block content%}
+
+{% for i in bookings%}
+<p>Booking ID: {{i.id}}</p>
+<p>Session ID: {{i.sessionId}}</p>
+<p>Booking State: {{i.state}}</p>
+{%endfor%}
+
+<html>
+  <head>
+
+      <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+      <!--<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.4.1/lux/bootstrap.min.css" rel="stylesheet" integrity="sha384-oOs/gFavzADqv3i5nCM+9CzXe3e5vXLXZ5LZ7PplpsWpTCufB7kqkTlC9FtZ5nJo" crossorigin="anonymous">-->
+      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    </head>
+    <body>
+      <div class="row">
+        <div class="col-1 col-md-1">
+        </div>
+        <div class="col-6 col-md-4 pt-5">
+
+            <canvas id="bar-chart" width="150" height="150"></canvas>
+        </div>
+        <div class="col-1 col-md-1">
+        </div>
+        <div id="piechart" class="col-6 col-md-4">
+        </div>
+      </div>
+
+        <script>
+          new Chart(document.getElementById("bar-chart"), {
+              type: 'bar',
+              data: {
+                labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                datasets: [
+                  {
+                    label: "Income(Pounds)",
+                    backgroundColor: ["red", "blue","yellow","green","pink","purple"],
+                    data: [5000,4600,6000,4300,5000,8000]
+                  }
+                ]
+              },
+              options: {
+                legend: { display: false },
+                title: {
+                  display: true,
+                  text: 'Daily Income'
+                },
+                scales: {
+                      yAxes: [{
+                          ticks: {
+                              beginAtZero:true
+                          }
+                      }]
+                  }
+              }
+          });
+
+        </script>
+
+
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['corechart']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+              var data = google.visualization.arrayToDataTable([
+              ['Facility Usage', 'People per week'],
+              ['Swimming pool', 650],
+              ['Fitness Room', 500],
+              ['Squash courts', 250],
+              ['Sports Hall', 400],
+
+            ]);
+
+              var options = {'title':'Weekly Facility Usage', 'width':550, 'height':400};
+
+
+              var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+              chart.draw(data, options);
+            }
+         </script>
+
+
+  </body>
+</html>
+{%endblock%}

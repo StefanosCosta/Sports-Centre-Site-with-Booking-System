@@ -1,0 +1,18 @@
+{%extends "layout.html" %}
+{%block content%}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-info">{{ message }} </div>
+     {% endfor %}
+   {% endif %}
+ {% endwith %}
+ <br />
+ <h>Your current plan: {{user.plan}}</h>
+ <br />
+<form class="form form-horizontal" method="post" role="form">
+   <br />
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+  <button type="submit" name="button" class="btn btn-primary">Cancel Membership</button>
+</form>
+{%endblock%}

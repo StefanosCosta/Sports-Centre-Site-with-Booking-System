@@ -1,0 +1,62 @@
+/*Google Font*/
+@import url('https://fonts.googleapis.com/css?family=Oswald&display=swap');
+
+*{
+    box-sizing: border-box;
+}
+
+
+:root{
+    --Oswald:"Oswald",cursive;
+    --light-black: #2e2c2caf;
+    --bggradient:linear-gradient(
+        to bottom,
+        #c0c0aa, #1cefff);
+    --light-grey: rgba(255,255,255,0);
+}
+
+header a{
+    font-family: var(--Oswald);
+    font-size: 0.9em;
+    color: whitesmoke;
+}
+
+body{
+    background: linear-gradient(
+        to bottom,
+        #c0c0aa, #1cefff);
+    font-family: var(--Oswald);
+    letter-spacing: 0.2em;
+}
+
+header .nav-item:last-child{
+    padding-right: 10.5em;
+}
+
+header .nav-item{
+    padding: 0.9em;
+}
+
+header .navbar-brand{
+    padding-left: 8rem;
+}
+
+header .navbar-brand:hover{
+    color: black;
+}
+
+header .nav-link:hover{
+    color: black;
+}
+
+header .row .col-md-5{
+    padding: 4.2vmin 1vmin;
+}
+
+
+
+#carouselExampleFade .carousel-item{
+    height: 400px;
+    width: 100%;
+}
+ 

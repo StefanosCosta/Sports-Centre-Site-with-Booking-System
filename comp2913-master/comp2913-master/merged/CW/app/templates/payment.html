@@ -1,0 +1,22 @@
+{%extends "layout.html" %}
+{%block content%}
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-info">{{ message }} </div>
+     {% endfor %}
+   {% endif %}
+ {% endwith %}
+ <script src="https://js.stripe.com/v3/="></script>
+ <form action="/charge" method="post"><!-- To do:on data amount send database price-->
+    <script
+      src="https://checkout.stripe.com/checkout.js"
+      class="stripe-button"
+      data-key="{{ key }}"
+      data-description="A Flask Charge"
+      data-amount="400"
+      data-locale="auto">
+    </script>
+  </form>
+
+{%endblock%}
